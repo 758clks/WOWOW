@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOW官网资源门户</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f5f5f5;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --accent-color: #0f0f0f;
+            --hover-color: #f0f0f0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            /* 确保所有颜色都是黑白风格 */
+        }
+
+        .dark {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333333;
+            --accent-color: #ffffff;
+            --hover-color: #2a2a2a;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .section {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .grid-item {
+            background-color: var(--primary-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .grid-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .year-btn {
+            transition: all 0.3s ease;
+        }
+
+        .year-btn.active {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+        }
+
+        .search-input {
+            background-color: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(15, 15, 15, 0.1);
+        }
+
+        /* 模态框样式 */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--primary-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 微交互动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- 头部 -->
+        <header class="mb-12 text-center">
+            <div class="flex justify-center items-center mb-6">
+                <img src="LOGO/LOGO(1)-01.png" alt="WOW Logo" class="w-48 h-auto object-contain">
+            </div>
+            <h1 class="text-2xl font-medium mb-2">致力于打造全球顶尖的终端形象产品</h1>
+            <p class="text-sm opacity-75">Committed to creating world-class terminal image products</p>
+            <div class="absolute top-4 right-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 资源分类导航 -->
+        <section class="section p-6 mb-10 fade-in" style="animation-delay: 0.1s;">
+            <h2 class="text-xl font-medium mb-6 text-center relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-12 after:h-0.5 after:bg-gray-300 after:-translate-x-1/2 dark:after:bg-gray-600">资源分类导航</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="category-btn py-3 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all font-medium text-sm active">全部资源</button>
+                <button class="category-btn py-3 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all font-medium text-sm">设计资源</button>
+                <button class="category-btn py-3 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all font-medium text-sm">技术文档</button>
+                <button class="category-btn py-3 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all font-medium text-sm">团队介绍</button>
+            </div>
+        </section>
+
+        <!-- 骄傲的设计师 -->
+        <section class="section p-6 mb-10 fade-in" style="animation-delay: 0.2s;">
+            <h2 class="text-xl font-medium mb-6 text-center relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-12 after:h-0.5 after:bg-gray-300 after:-translate-x-1/2 dark:after:bg-gray-600">骄傲的设计师</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/4❤️很wow的老麦.png">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/4❤️很wow的老麦.png" alt="很wow的老麦" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/发色很 wow 的 PP鹏.svg">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/发色很 wow 的 PP鹏.svg" alt="发色很 wow 的 PP鹏" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/念经很wow的马特.jpg">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/念经很wow的马特.jpg" alt="念经很wow的马特" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/思想很wow的子辉.png">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/思想很wow的子辉.png" alt="思想很wow的子辉" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/技术很wow的恩哥.jpg">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/技术很wow的恩哥.jpg" alt="技术很wow的恩哥" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/段子很wow的小强.png">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/段子很wow的小强.png" alt="段子很wow的小强" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/瘾很wow的杰哥.jpg">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/瘾很wow的杰哥.jpg" alt="瘾很wow的杰哥" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/骄傲的设计师/耳环很wow的露西.jpg">
+                    <img src="/Users/11178830/Documents/WOW官网/骄傲的设计师/耳环很wow的露西.jpg" alt="耳环很wow的露西" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <div class="relative">
+                    <input type="text" placeholder="搜索设计师..." class="search-input py-2 px-4 pr-10 rounded-lg text-sm w-full md:w-64">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 终端AI项目案例汇总 -->
+        <section class="section p-6 mb-10 fade-in" style="animation-delay: 0.3s;">
+            <h2 class="text-xl font-medium mb-6 text-center relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-12 after:h-0.5 after:bg-gray-300 after:-translate-x-1/2 dark:after:bg-gray-600">终端AI项目案例汇总</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/终端AI项目案例汇总/分期免息.jpg">
+                    <img src="/Users/11178830/Documents/WOW官网/终端AI项目案例汇总/分期免息.jpg" alt="分期免息" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/终端AI项目案例汇总/碎屏宝.jpg">
+                    <img src="/Users/11178830/Documents/WOW官网/终端AI项目案例汇总/碎屏宝.jpg" alt="碎屏宝" class="w-full h-full object-cover">
+                </div>
+                <!-- 预留位置用于添加更多项目 -->
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加项目</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <div class="relative">
+                    <input type="text" placeholder="搜索项目..." class="search-input py-2 px-4 pr-10 rounded-lg text-sm w-full md:w-64">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 历年WOW奖项目 -->
+        <section class="section p-6 mb-10 fade-in" style="animation-delay: 0.4s;">
+            <h2 class="text-xl font-medium mb-6 text-center relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-12 after:h-0.5 after:bg-gray-300 after:-translate-x-1/2 dark:after:bg-gray-600">历年WOW奖项目</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/历年WOW奖项目/WechatIMG2544.jpeg">
+                    <img src="/Users/11178830/Documents/WOW官网/历年WOW奖项目/WechatIMG2544.jpeg" alt="WOW奖项目1" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/历年WOW奖项目/WechatIMG2597.jpeg">
+                    <img src="/Users/11178830/Documents/WOW官网/历年WOW奖项目/WechatIMG2597.jpeg" alt="WOW奖项目2" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加项目</p>
+                    </div>
+                </div>
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加项目</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <div class="relative">
+                    <input type="text" placeholder="搜索项目..." class="search-input py-2 px-4 pr-10 rounded-lg text-sm w-full md:w-64">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 历年项目复盘总结 -->
+        <section class="section p-6 mb-10 fade-in" style="animation-delay: 0.5s;">
+            <h2 class="text-xl font-medium mb-6 text-center relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-12 after:h-0.5 after:bg-gray-300 after:-translate-x-1/2 dark:after:bg-gray-600">历年项目复盘总结</h2>
+            <div class="flex justify-center mb-6">
+                <div class="flex space-x-2">
+                    <button class="year-btn py-2 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all text-sm">2023</button>
+                    <button class="year-btn py-2 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all text-sm">2024</button>
+                    <button class="year-btn py-2 px-4 rounded-lg active bg-black text-white dark:bg-white dark:text-black transition-all text-sm">2025</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/历年项目复盘总结/刘志林 2024述职报告.pptx">
+                    <div class="w-full h-full flex flex-col items-center justify-center p-4">
+                        <i class="fas fa-file-powerpoint text-4xl mb-3 text-red-500"></i>
+                        <p class="text-center text-sm font-medium">刘志林 2024述职报告</p>
+                        <p class="text-xs text-gray-500 mt-1">PPTX文件</p>
+                    </div>
+                </div>
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加文档</p>
+                    </div>
+                </div>
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加文档</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <div class="relative">
+                    <input type="text" placeholder="搜索文档..." class="search-input py-2 px-4 pr-10 rounded-lg text-sm w-full md:w-64">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 历年团建活动 -->
+        <section class="section p-6 mb-10 fade-in" style="animation-delay: 0.6s;">
+            <h2 class="text-xl font-medium mb-6 text-center relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-12 after:h-0.5 after:bg-gray-300 after:-translate-x-1/2 dark:after:bg-gray-600">历年团建活动</h2>
+            <div class="flex justify-center mb-6">
+                <div class="flex space-x-2">
+                    <button class="year-btn py-2 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all text-sm">2023</button>
+                    <button class="year-btn py-2 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all text-sm">2024</button>
+                    <button class="year-btn py-2 px-4 rounded-lg active bg-black text-white dark:bg-white dark:text-black transition-all text-sm">2025</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/历年团建活动/WechatIMG2594.jpeg">
+                    <img src="/Users/11178830/Documents/WOW官网/历年团建活动/WechatIMG2594.jpeg" alt="团建活动1" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item" data-file="/Users/11178830/Documents/WOW官网/历年团建活动/WechatIMG2678.jpeg">
+                    <img src="/Users/11178830/Documents/WOW官网/历年团建活动/WechatIMG2678.jpeg" alt="团建活动2" class="w-full h-full object-cover">
+                </div>
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加照片</p>
+                    </div>
+                </div>
+                <div class="grid-item flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                    <div class="text-center">
+                        <i class="fas fa-plus text-3xl mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-500">添加照片</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <div class="relative">
+                    <input type="text" placeholder="搜索活动..." class="search-input py-2 px-4 pr-10 rounded-lg text-sm w-full md:w-64">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-16 mb-8 fade-in" style="animation-delay: 0.7s;">
+            <p class="text-lg font-medium mb-2">心中有光，无畏前行</p>
+            <p class="text-lg font-medium mb-6">Light in the heart, no fear to go forward</p>
+            <p class="text-sm opacity-75">© 2025 WOW设计团队 版权所有</p>
+            <div class="flex justify-center space-x-4 mt-3">
+                <a href="#" class="text-sm hover:underline">关于我们</a>
+                <a href="#" class="text-sm hover:underline">联系方式</a>
+                <a href="#" class="text-sm hover:underline">隐私政策</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content p-0 max-w-4xl">
+            <div class="relative">
+                <button id="close-modal" class="absolute top-4 right-4 z-10 p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-70 transition-all">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img id="modal-img" src="" alt="" class="max-h-[80vh] w-auto">
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                    <div class="flex justify-between items-center">
+                        <h3 id="modal-title" class="text-white text-lg font-medium"></h3>
+                        <button id="download-btn" class="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-100 transition-all">
+                            <i class="fas fa-download mr-2"></i>下载
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="modal-content-container" class="p-6"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 深色模式切换
+            const themeToggle = document.getElementById('theme-toggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // 初始化主题
+            if (prefersDarkScheme.matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+            });
+            
+            // 模态框功能
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const closeModal = document.getElementById('close-modal');
+            const downloadBtn = document.getElementById('download-btn');
+            const modalContentContainer = document.getElementById('modal-content-container');
+            const gridItems = document.querySelectorAll('.grid-item');
+            
+            // 关闭模态框
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            });
+            
+            // 点击模态框外部关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal.click();
+                }
+            });
+            
+            // 资源项点击事件
+            gridItems.forEach(item => {
+                if (!item.classList.contains('flex')) { // 排除添加按钮
+                    item.addEventListener('click', function() {
+                        const filePath = this.getAttribute('data-file');
+                        if (filePath) {
+                            showFileDetails(filePath, this);
+                        }
+                    });
+                }
+            });
+            
+            // 显示文件详情
+            function showFileDetails(filePath, item) {
+                const fileName = filePath.split('/').pop();
+                const fileExtension = fileName.split('.').pop().toLowerCase();
+                
+                // 重置模态框内容
+                modalContentContainer.innerHTML = '';
+                
+                // 图片文件
+                if (['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(fileExtension)) {
+                    modalImg.src = filePath;
+                    modalImg.style.display = 'block';
+                    modalTitle.textContent = fileName;
+                    modalContentContainer.style.display = 'none';
+                    
+                    // 设置下载按钮
+                    downloadBtn.onclick = function() {
+                        const a = document.createElement('a');
+                        a.href = filePath;
+                        a.download = fileName;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    };
+                } 
+                // 文档文件
+                else if (['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'pdf'].includes(fileExtension)) {
+                    modalImg.style.display = 'none';
+                    modalContentContainer.style.display = 'block';
+                    
+                    const fileInfo = document.createElement('div');
+                    fileInfo.className = 'file-preview';
+                    fileInfo.innerHTML = `
+                        <div class="text-center py-8">
+                            <i class="fas fa-file-${getFileIcon(fileExtension)} text-5xl mb-4 ${getFileColor(fileExtension)}"></i>
+                            <h3 class="text-xl font-medium mb-2">${fileName}</h3>
+                            <p class="text-sm text-gray-500 mb-6">文件类型: ${fileExtension.toUpperCase()}</p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="${filePath}" download class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                                    <i class="fas fa-download mr-2"></i>下载文件
+                                </a>
+                                <a href="${filePath}" target="_blank" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                                    <i class="fas fa-eye mr-2"></i>在线预览
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    modalContentContainer.appendChild(fileInfo);
+                }
+                
+                // 显示模态框
+                modal.style.display = 'block';
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+            
+            // 获取文件图标
+            function getFileIcon(extension) {
+                switch(extension) {
+                    case 'pdf': return 'pdf';
+                    case 'doc': case 'docx': return 'word';
+                    case 'xls': case 'xlsx': return 'excel';
+                    case 'ppt': case 'pptx': return 'powerpoint';
+                    default: return 'alt';
+                }
+            }
+            
+            // 获取文件颜色
+            function getFileColor(extension) {
+                // 黑白风格，所有文件图标使用灰色或黑色
+                switch(extension) {
+                    case 'pdf': return 'text-gray-700 dark:text-gray-300';
+                    case 'doc': case 'docx': return 'text-gray-700 dark:text-gray-300';
+                    case 'xls': case 'xlsx': return 'text-gray-700 dark:text-gray-300';
+                    case 'ppt': case 'pptx': return 'text-gray-700 dark:text-gray-300';
+                    default: return 'text-gray-500';
+                }
+            }
+            
+            // 分类按钮点击事件
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 年份按钮点击事件
+            const yearBtns = document.querySelectorAll('.year-btn');
+            yearBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const parentSection = this.closest('section');
+                    const yearBtnsInSection = parentSection.querySelectorAll('.year-btn');
+                    
+                    yearBtnsInSection.forEach(b => {
+                        b.classList.remove('active');
+                        b.classList.remove('bg-black');
+                        b.classList.remove('text-white');
+                        b.classList.remove('dark:bg-white');
+                        b.classList.remove('dark:text-black');
+                    });
+                    
+                    this.classList.add('active');
+                    this.classList.add('bg-black');
+                    this.classList.add('text-white');
+                    this.classList.add('dark:bg-white');
+                    this.classList.add('dark:text-black');
+                });
+            });
+            
+            // 搜索功能
+            const searchInputs = document.querySelectorAll('.search-input');
+            searchInputs.forEach(input => {
+                input.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        const searchTerm = this.value.toLowerCase();
+                        const section = this.closest('section');
+                        const items = section.querySelectorAll('.grid-item');
+                        
+                        items.forEach(item => {
+                            if (item.classList.contains('flex')) return; // 跳过添加按钮
+                            
+                            const filePath = item.getAttribute('data-file');
+                            const fileName = filePath ? filePath.split('/').pop().toLowerCase() : '';
+                            
+                            if (fileName.includes(searchTerm)) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // 添加淡入动画
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
